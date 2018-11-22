@@ -10,9 +10,9 @@ var es3ifyPlugin = require('es3ify-webpack-plugin');
 module.exports = {
 	entry:{
 		//'home/home':'./content/src/js/home/index.js',
-		// 'multiContrast/multiContrast':'./content/src/js/multiContrast/index.js',
-		// 'basicStatistics/basicStatistics':'./content/src/js/basicStatistics/index.js'
-		 app:'./src/index.js'
+		  'multiContrast/multiContrast':'./page/content/src/js/multiContrast/index.js',
+		  'basicStatistics/basicStatistics':'./page/content/src/js/basicStatistics/index.js'
+		 //app:'./src/index.js'
 	},
 	output:{
 		filename:'[name].bundle.js',
@@ -51,9 +51,22 @@ module.exports = {
 	    new es3ifyPlugin(),
 	    new HtmlWebpackPlugin({
 			title: 'home',
+			filename:'multiContrast/index.html',
+			template: './page/multiContrast/index.html',
+			chunks: ['multiContrast/multiContrast'],
 			minify: {
-		        removeComments: true,
-		        collapseWhitespace: true
+		        removeComments: false,
+		        collapseWhitespace: false
+		    }
+		}),
+		 new HtmlWebpackPlugin({
+			title: 'home',
+			filename:'basicStatistics/index.html',
+			template: './page/basicStatistics/index.html',
+			chunks: ['basicStatistics/basicStatistics'],
+			minify: {
+		        removeComments: false,
+		        collapseWhitespace: false
 		    }
 		}),
 		new webpack.HotModuleReplacementPlugin()
@@ -62,6 +75,7 @@ module.exports = {
 		rules:[
 			{
 				test:/\.css$/,
+				exclude: /(node_modules|bower_components)/,
 				use:[
 					MiniCssExtractPlugin.loader,
 					'css-loader'
